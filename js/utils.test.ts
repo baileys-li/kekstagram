@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {concatNumber, isPalindrome, isShorterThan} from './functions';
+import {concatNumber, isPalindrome, isShorterThan} from './utils';
 
 describe ('Функция для проверки длины строки.', () => {
 	const TEST_STRING = 'проверяемая строка';
@@ -21,8 +21,7 @@ describe('Функция для проверки, является ли стро
 	it('Палиндром с пробелами', () => expect(isPalindrome('Лёша на полке клопа нашёл ')).toBe(true));
 });
 
-
-describe ('Функция для извлечения цифр из строки.', () => {
+describe('Функция для извлечения цифр из строки.', () => {
 	it('Строка содержит цифры в начале', () => expect(concatNumber('2023 год')).toBe(2023));
 	it('Строка содержит цифры в конце', () => expect(concatNumber('ECMAScript 2022')).toBe(2022));
 	it('Строка содержит цифры в разных местах, нужно конкетинировать', () => expect(concatNumber('1 кефир, 0.5 батона')).toBe(105));
