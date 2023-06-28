@@ -1,6 +1,5 @@
 const enum Time {
-	MINUTES_IN_HOUR = 60,
-	MS_IN_MINUTE = 60_000
+	MINUTES_IN_HOUR = 60
 }
 export type TimeString = `${number}:${number}`;
 
@@ -16,19 +15,4 @@ const isOnWorkHours = (startWork: TimeString, endWork: TimeString, startMeet: Ti
 	return startAsNumber <= startMeetAsNumber && endMeetAsNumber <= endAsNumber;
 };
 
-
-const getTimestamp = (time: TimeString, date: Date) => {
-	const [hours, minutes] = time.split(':').map(Number);
-	date.setHours(hours, minutes);
-	return date.getTime();
-};
-
-const isOnWorkHoursDate = (startWork: TimeString, endWork: TimeString, startMeet: TimeString, duration: number) => {
-	const currentDate = new Date();
-	const [dayBeginTimestamp, dayEndTimestamp, meetBeginTimestamp] = [startWork, endWork, startMeet].map((time) => getTimestamp(time, currentDate));
-	const meetEndTimestamp = meetBeginTimestamp + (duration * Time.MS_IN_MINUTE);
-
-	return meetBeginTimestamp >= dayBeginTimestamp && meetEndTimestamp <= dayEndTimestamp;
-};
-
-export { isOnWorkHours, isOnWorkHoursDate };
+export { isOnWorkHours };
