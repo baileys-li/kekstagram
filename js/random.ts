@@ -45,25 +45,25 @@ const createRandomIdGenerator = (min: number = Default.MIN_ID, max: number = Def
 	};
 };
 
-const createRandomIdGeneratorRec = (min: number = Default.MIN_ID, max: number = Default.MAX_ID) => {
-	const previousIds = new Set<number>();
+const createRandomIdGeneratorArray = (min: number = Default.MIN_ID, max: number = Default.MAX_ID) => {
+	const previousIds: number[] = [];
 
-	const generateId = (): number => {
-		if (previousIds.size === max - min + 1) {
+	return () => {
+		if (previousIds.length === max - min + 1) {
 			throw new Error('Нет свободных id');
 		}
 
-		const newId = getRandomInteger(min, max);
+		let currentId = getRandomInteger(min, max);
 
-		if (previousIds.has(newId)) {
-			return generateId();
+		while (previousIds.includes(currentId)) {
+			currentId = getRandomInteger(min, max);
 		}
 
-		previousIds.add(newId);
-		return newId;
-	};
+		previousIds.push(currentId);
 
-	return generateId;
+		return currentId;
+	};
 };
 
-export { getGeneratorID, getRandomInteger, getRandomElement, getRandomBoolean, createRandomIdGenerator, createRandomIdGeneratorRec };
+
+export { getGeneratorID, getRandomInteger, getRandomElement, getRandomBoolean, createRandomIdGenerator, createRandomIdGeneratorArray };

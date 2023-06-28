@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { createRandomIdGenerator, createRandomIdGeneratorRec } from './random';
+import { createRandomIdGenerator, createRandomIdGeneratorArray } from './random';
 import { isUniqueArray } from './utils';
 import { testPerformance } from './bench';
 
-[createRandomIdGenerator, createRandomIdGeneratorRec].forEach((generateGeneratorID) => {
+[createRandomIdGenerator, createRandomIdGeneratorArray].forEach((generateGeneratorID) => {
 	describe(`Тестируем генератор ID: ${generateGeneratorID.name}`, () => {
 		const generateID = generateGeneratorID(1, 5);
 
