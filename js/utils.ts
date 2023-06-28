@@ -1,5 +1,7 @@
 const enum Default {
 	MAX_LENGTH = 140,
+	NAMES_AMOUNT = 100,
+	START_NUMBER = 1,
 }
 
 /**
@@ -30,4 +32,8 @@ const concatNumber = (input: number | string) => {
 	return parseInt(stringWithOnlyDigits, 10);
 };
 
-export { isShorterThan, isPalindrome, concatNumber };
+const generateNumberArray = (length: number = Default.NAMES_AMOUNT, startValue: number = Default.START_NUMBER) => Array.from({ length }, (_, index) => index + startValue);
+
+const isUniqueArray = <El>(array: El[] | readonly El[]) => new Set(array).size === array.length;
+
+export { isShorterThan, isPalindrome, concatNumber, generateNumberArray, isUniqueArray };

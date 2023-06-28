@@ -6,4 +6,4 @@ const testPerformance = (test: () => unknown, string = 'Тестируется')
 	console.timeEnd(string);
 };
 
-export {testPerformance};
+export { testPerformance };
