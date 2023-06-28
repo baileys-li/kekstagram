@@ -1,5 +1,5 @@
-import { createRandomIdGenerator, getRandomElement, getRandomInteger } from './random';
-import { Photo, PhotoComment } from './types';
+import { createRandomIdGenerator, getRandomElement, getRandomInteger } from '../utils/random';
+import { Photo, PhotoComment } from '../types';
 
 const enum Default {
 	AMOUNT = 25,
