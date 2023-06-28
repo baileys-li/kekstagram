@@ -34,4 +34,6 @@ const concatNumber = (input: number | string) => {
 
 const generateNumberArray = (length: number = Default.NAMES_AMOUNT, startValue: number = Default.START_NUMBER) => Array.from({ length }, (_, index) => index + startValue);
 
-export { isShorterThan, isPalindrome, concatNumber, generateNumberArray };
+const isUniqueArray = <El>(array: El[] | readonly El[]) => new Set(array).size === array.length;
+
+export { isShorterThan, isPalindrome, concatNumber, generateNumberArray, isUniqueArray };

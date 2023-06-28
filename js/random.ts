@@ -25,4 +25,45 @@ const getGeneratorID = () => {
 	return () => ++latestID;
 };
 
-export { getGeneratorID, getRandomInteger, getRandomElement, getRandomBoolean };
+const createRandomIdGenerator = (min: number = Default.MIN_ID, max: number = Default.MAX_ID) => {
+	const previousIds = new Set<number>();
+
+	return () => {
+		if (previousIds.size === max - min + 1) {
+			throw new Error('Нет свободных id');
+		}
+
+		let currentId = getRandomInteger(min, max);
+
+		while (previousIds.has(currentId)) {
+			currentId = getRandomInteger(min, max);
+		}
+
+		previousIds.add(currentId);
+
+		return currentId;
+	};
+};
+
+const createRandomIdGeneratorRec = (min: number = Default.MIN_ID, max: number = Default.MAX_ID) => {
+	const previousIds = new Set<number>();
+
+	const generateId = (): number => {
+		if (previousIds.size === max - min + 1) {
+			throw new Error('Нет свободных id');
+		}
+
+		const newId = getRandomInteger(min, max);
+
+		if (previousIds.has(newId)) {
+			return generateId();
+		}
+
+		previousIds.add(newId);
+		return newId;
+	};
+
+	return generateId;
+};
+
+export { getGeneratorID, getRandomInteger, getRandomElement, getRandomBoolean, createRandomIdGenerator, createRandomIdGeneratorRec };
