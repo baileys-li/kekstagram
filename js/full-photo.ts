@@ -1,4 +1,3 @@
-import { photos } from './mock/mock';
 import { Photo, PhotoComment } from './types';
 import { isEscapeKey } from './utils/utils';
 
@@ -31,9 +30,13 @@ if (
 commentsLoader.hidden = true;
 commentsStatus.hidden = true;
 
+const toggleModalClasses = (willBeOpened = true) => {
+	wrapper.classList.toggle('hidden', !willBeOpened);
+	document.body.classList.toggle('modal-open', willBeOpened);
+};
+
 const closeModal = () => {
-	wrapper.classList.add('hidden');
-	document.body.classList.remove('modal-open');
+	toggleModalClasses(false);
 
 	document.removeEventListener('keydown', onDocumentEscape);
 
@@ -65,8 +68,7 @@ const renderComments = (comments: PhotoComment[]) => {
 };
 
 const openPhoto = ({ url, description, likes, comments }: Photo) => {
-	wrapper.classList.remove('hidden');
-	document.body.classList.add('modal-open');
+	toggleModalClasses(true);
 
 	imageElement.src = url;
 	imageElement.alt = description;
