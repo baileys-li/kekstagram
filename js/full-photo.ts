@@ -8,16 +8,9 @@ const descriptionElement = wrapper?.querySelector<HTMLParagraphElement>('.social
 const likesElement = wrapper?.querySelector<HTMLSpanElement>('.likes-count');
 const closeButton = wrapper?.querySelector<HTMLButtonElement>('.big-picture__cancel');
 
-if (
-	!wrapper ||
-	!imageElement ||
-	!descriptionElement ||
-	!likesElement ||
-	!closeButton
-) {
+if (!wrapper || !imageElement || !descriptionElement || !likesElement || !closeButton) {
 	throw new Error('Critical elements for Full Photo were not found');
 }
-
 
 const toggleModalClasses = (willBeOpened = true) => {
 	wrapper.classList.toggle('hidden', !willBeOpened);
@@ -27,7 +20,7 @@ const toggleModalClasses = (willBeOpened = true) => {
 const closeModal = () => {
 	toggleModalClasses(false);
 	document.removeEventListener('keydown', onDocumentEscape);
-	clearComments()
+	clearComments();
 };
 
 closeButton.addEventListener('click', () => closeModal());
@@ -38,17 +31,18 @@ function onDocumentEscape(evt: KeyboardEvent) {
 	}
 }
 
-
-
-const openPhoto = ({ url, description, likes, comments }: Photo) => {
-	toggleModalClasses(true);
-
+const renderPhoto = ({ url, description, likes, comments }: Photo) => {
 	imageElement.src = url;
 	imageElement.alt = description;
 	descriptionElement.textContent = description;
 	likesElement.textContent = likes.toString();
 
 	renderComments(comments);
+};
+
+const openPhoto = (photo: Photo) => {
+	toggleModalClasses(true);
+	renderPhoto(photo);
 	document.addEventListener('keydown', onDocumentEscape);
 };
 

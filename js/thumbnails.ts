@@ -22,23 +22,23 @@ const onThumbnailClick = (evt: Event) => {
 	}
 };
 
-const renderPicture = ({id, url, description, likes, comments }: Photo) => {
-	const pictureElement = template.cloneNode(true) as HTMLAnchorElement;
-	const pictureTag = pictureElement.querySelector<HTMLImageElement>('.picture__img');
-	if (!pictureTag) {
-		return;
-	}
+const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
+	const thumbnailElement = template.cloneNode(true) as HTMLAnchorElement;
+	const pictureElement = thumbnailElement.querySelector<HTMLImageElement>('.picture__img');
+	thumbnailElement.dataset.id = id.toString();
+	pictureElement!.src = url;
+	pictureElement!.alt = description;
+	thumbnailElement.querySelector('.picture__likes')!.textContent = likes.toString();
+	thumbnailElement.querySelector('.picture__comments')!.textContent = comments.length.toString();
 
-	pictureElement.dataset.id = id.toString();
-	pictureElement.addEventListener('click', onThumbnailClick);
-
-	pictureTag.src = url;
-	pictureTag.alt = description;
-	pictureElement.querySelector('.picture__likes')!.textContent = likes.toString();
-	pictureElement.querySelector('.picture__comments')!.textContent = comments.length.toString();
-
-	fragment.append(pictureElement);
+	return thumbnailElement;
 };
 
-photos.forEach(renderPicture);
+const renderThumbnail = (photo: Photo) => {
+	const thumbnail = createThumbnail(photo);
+	thumbnail.addEventListener('click', onThumbnailClick);
+	fragment.append(thumbnail);
+};
+
+photos.forEach(renderThumbnail);
 picturesWrapper.append(fragment);
