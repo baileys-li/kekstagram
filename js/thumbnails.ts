@@ -1,7 +1,7 @@
 import { openPhoto } from './full-photo';
 import { photos } from './mock/mock';
 import type { Photo } from './types';
-import { findBEMElement, findTemplate } from './utils';
+import { findBEMElement, findTemplate, renderPack } from './utils';
 
 const template = findTemplate<HTMLAnchorElement>('#picture');
 const picturesWrapper = document.querySelector('.pictures');
@@ -9,8 +9,6 @@ const picturesWrapper = document.querySelector('.pictures');
 if (!picturesWrapper) {
 	throw new Error('Pictures wrapper not found');
 }
-
-const fragment = document.createDocumentFragment();
 
 const onThumbnailClick = (evt: Event) => {
 	evt.preventDefault();
@@ -36,11 +34,10 @@ const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 	return thumbnail;
 };
 
-const renderThumbnail = (photo: Photo) => {
+
+renderPack(photos, picturesWrapper, (photo) => {
 	const thumbnail = createThumbnail(photo);
 	thumbnail.addEventListener('click', onThumbnailClick);
-	fragment.append(thumbnail);
-};
 
-photos.forEach(renderThumbnail);
-picturesWrapper.append(fragment);
+	return thumbnail;
+});

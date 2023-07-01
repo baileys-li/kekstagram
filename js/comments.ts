@@ -1,5 +1,5 @@
 import { PhotoComment } from './types';
-import { findBEMElement, findTemplate } from './utils';
+import { findBEMElement, findTemplate, renderPack } from './utils';
 
 const countElement = document.querySelector<HTMLSpanElement>('.comments-count');
 const template = findTemplate<HTMLLIElement>('#comment');
@@ -14,21 +14,19 @@ if (!countElement || !list || !status || !loader) {
 loader.hidden = true;
 status.hidden = true;
 
+const createComment = ({ avatar, name, message }: PhotoComment) => {
+	const comment = template.cloneNode(true) as typeof template;
+	const avatarElement = findBEMElement<HTMLImageElement>(comment, 'picture', 'social');
+	avatarElement.src = avatar;
+	avatarElement.alt = name;
+	findBEMElement(comment, 'text', 'social').textContent = message;
+
+	return comment;
+};
+
 const renderComments = (comments: PhotoComment[]) => {
 	countElement.textContent = comments.length.toString();
-
-	const fragment = document.createDocumentFragment();
-	comments.forEach((comment) => {
-		const commentElement = template.cloneNode(true) as typeof template;
-		const commentAvatar = findBEMElement<HTMLImageElement>(commentElement, 'picture', 'social');
-		commentAvatar.src = comment.avatar;
-		commentAvatar.alt = comment.name;
-		findBEMElement(commentElement, 'text', 'social').textContent = comment.message;
-
-		fragment.append(commentElement);
-	});
-
-	list.append(fragment);
+	renderPack(comments, list, createComment);
 };
 
 const clearComments = () => {

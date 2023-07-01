@@ -31,4 +31,11 @@ const findBEMElement = <E extends HTMLElement = HTMLElement>(blockNode: Element,
 	return elementNode;
 };
 
-export { isUniqueArray, isEscapeKey, findTemplate, findBEMElement };
+const renderPack = <El>(items: El[], container: Element, render: (item: El) => HTMLElement) => {
+	const fragment = document.createDocumentFragment();
+	items.forEach((item) => fragment.append(render(item)));
+	container.append(fragment);
+};
+
+
+export { isUniqueArray, isEscapeKey, findTemplate, findBEMElement, renderPack };
