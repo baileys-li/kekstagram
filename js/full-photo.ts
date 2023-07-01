@@ -80,4 +80,4 @@ const openPhoto = ({ url, description, likes, comments }: Photo) => {
 	document.addEventListener('keydown', onDocumentEscape);
 };
 
-openPhoto(photos[0]);
+export { openPhoto };

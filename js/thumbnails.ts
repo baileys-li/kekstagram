@@ -1,3 +1,4 @@
+import { openPhoto } from './full-photo';
 import { photos } from './mock/mock';
 import type { Photo } from './types';
 
@@ -10,14 +11,19 @@ if (!template || !picturesWrapper) {
 
 const fragment = document.createDocumentFragment();
 
-const renderPicture = ({ id, url, description, likes, comments }: Photo) => {
+const renderPicture = (photo: Photo) => {
+	const { url, description, likes, comments } = photo;
 	const pictureElement = template.cloneNode(true) as HTMLAnchorElement;
 	const pictureTag = pictureElement.querySelector<HTMLImageElement>('.picture__img');
 	if (!pictureTag) {
 		return;
 	}
+	pictureElement.addEventListener('click', (evt) => {
+		evt.preventDefault();
+		openPhoto(photo);
+	})
 
-	pictureElement.href = `photos/${id}`;
+	// pictureElement.href = `photos/${id}`;
 
 	pictureTag.src = url;
 	pictureTag.alt = description;
