@@ -1,5 +1,5 @@
+import { findPhotoByID, photos } from './data';
 import { openPhoto } from './full-photo';
-import { photos } from './mock/mock';
 import type { Photo } from './types';
 import { findBEMElement, findTemplate, renderPack } from './utils';
 
@@ -14,7 +14,7 @@ const onThumbnailClick = (evt: Event) => {
 	evt.preventDefault();
 	const link = evt.currentTarget as typeof template;
 	const id = Number(link.dataset.id);
-	const foundPhoto = photos.find((photo) => photo.id === id);
+	const foundPhoto = findPhotoByID(id);
 
 	if (foundPhoto) {
 		return openPhoto(foundPhoto);
@@ -33,7 +33,6 @@ const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 
 	return thumbnail;
 };
-
 
 renderPack(photos, picturesWrapper, (photo) => {
 	const thumbnail = createThumbnail(photo);

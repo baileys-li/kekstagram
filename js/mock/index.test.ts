@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { photos } from './mock';
+import { photos } from '.';
 
 describe('Тестрируем моки', () => {
 	const expectedAmount = photos.length;
