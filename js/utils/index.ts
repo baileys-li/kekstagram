@@ -1,4 +1,3 @@
-
 type EscapeKeyEvent = Omit<KeyboardEvent, 'key'> & { key: 'Escape' };
 
 const isEscapeKey = (evt: KeyboardEvent): evt is EscapeKeyEvent => evt.key === 'Escape';
@@ -19,4 +18,17 @@ const findTemplate = <E extends HTMLElement = HTMLElement>(id: string) => {
 	return template as E;
 };
 
-export { isUniqueArray, isEscapeKey, findTemplate };
+const findBEMElement = <E extends HTMLElement = HTMLElement>(blockNode: Element, element: string, block?: string) => {
+	if (!block) {
+		block = blockNode.classList[0]!;
+	}
+
+	const elementNode = blockNode.querySelector<E>(`.${block}__${element}`);
+	if (elementNode === null) {
+		throw new Error(`Element ${element} not found in block ${block}`);
+	}
+
+	return elementNode;
+};
+
+export { isUniqueArray, isEscapeKey, findTemplate, findBEMElement };

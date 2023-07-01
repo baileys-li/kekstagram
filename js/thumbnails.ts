@@ -1,7 +1,7 @@
 import { openPhoto } from './full-photo';
 import { photos } from './mock/mock';
 import type { Photo } from './types';
-import { findTemplate } from './utils';
+import { findBEMElement, findTemplate } from './utils';
 
 const template = findTemplate<HTMLAnchorElement>('#picture');
 const picturesWrapper = document.querySelector('.pictures');
@@ -14,7 +14,7 @@ const fragment = document.createDocumentFragment();
 
 const onThumbnailClick = (evt: Event) => {
 	evt.preventDefault();
-	const link = evt.currentTarget as HTMLAnchorElement;
+	const link = evt.currentTarget as typeof template;
 	const id = Number(link.dataset.id);
 	const foundPhoto = photos.find((photo) => photo.id === id);
 
@@ -24,15 +24,16 @@ const onThumbnailClick = (evt: Event) => {
 };
 
 const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
-	const thumbnailElement = template.cloneNode(true) as HTMLAnchorElement;
-	const pictureElement = thumbnailElement.querySelector<HTMLImageElement>('.picture__img');
-	thumbnailElement.dataset.id = id.toString();
+	const thumbnail = template.cloneNode(true) as typeof template;
+	const pictureElement = findBEMElement<HTMLImageElement>(thumbnail, 'img');
+	thumbnail.dataset.id = id.toString();
 	pictureElement!.src = url;
 	pictureElement!.alt = description;
-	thumbnailElement.querySelector('.picture__likes')!.textContent = likes.toString();
-	thumbnailElement.querySelector('.picture__comments')!.textContent = comments.length.toString();
 
-	return thumbnailElement;
+	findBEMElement(thumbnail, 'likes').textContent = likes.toString();
+	findBEMElement(thumbnail, 'comments').textContent = comments.length.toString();
+
+	return thumbnail;
 };
 
 const renderThumbnail = (photo: Photo) => {
