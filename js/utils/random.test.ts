@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createRandomIdGenerator } from './random';
-import { isUniqueArray } from './utils';
+import { isUniqueArray } from '.';
 
 describe('Тестируем генератор ID', () => {
 	it('Получаем уникальные ID', () => {

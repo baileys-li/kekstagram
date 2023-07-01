@@ -1,7 +1,7 @@
 import { openPhoto } from './full-photo';
 import { photos } from './mock/mock';
 import type { Photo } from './types';
-import { findTemplate } from './utils/utils';
+import { findTemplate } from './utils';
 
 const template = findTemplate<HTMLAnchorElement>('#picture');
 const picturesWrapper = document.querySelector('.pictures');

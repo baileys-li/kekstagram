@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isUniqueArray } from './utils';
+import { isUniqueArray } from '.';
 
 describe('isUniqueArray', () => {
 	it('returns true for arrays with unique elements', () => {

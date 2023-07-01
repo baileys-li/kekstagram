@@ -1,5 +1,5 @@
 import { PhotoComment } from './types';
-import { findTemplate } from './utils/utils';
+import { findTemplate } from './utils';
 
 const countElement = document.querySelector<HTMLSpanElement>('.comments-count');
 const template = findTemplate<HTMLLIElement>('#comment');
