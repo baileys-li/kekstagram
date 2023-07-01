@@ -1,24 +1,25 @@
 import { PhotoComment } from './types';
+import { findTemplate } from './utils/utils';
 
-const commentCountElement = document.querySelector<HTMLSpanElement>('.comments-count');
-const commentTemplate = document.querySelector<HTMLTemplateElement>('#comment')?.content.querySelector<HTMLLIElement>('.social__comment');
-const commentsWrapper = document.querySelector<HTMLUListElement>('.social__comments');
-const commentsStatus = document.querySelector<HTMLDivElement>('.social__comment-count');
-const commentsLoader = document.querySelector<HTMLButtonElement>('.comments-loader');
+const countElement = document.querySelector<HTMLSpanElement>('.comments-count');
+const template = findTemplate<HTMLLIElement>('#comment');
+const list = document.querySelector<HTMLUListElement>('.social__comments');
+const status = document.querySelector<HTMLDivElement>('.social__comment-count');
+const loader = document.querySelector<HTMLButtonElement>('.comments-loader');
 
-if (!commentCountElement || !commentTemplate || !commentsWrapper || !commentsStatus || !commentsLoader) {
+if (!countElement || !list || !status || !loader) {
 	throw new Error('Critical elements for Comments were not found');
 }
 
-commentsLoader.hidden = true;
-commentsStatus.hidden = true;
+loader.hidden = true;
+status.hidden = true;
 
 const renderComments = (comments: PhotoComment[]) => {
-	commentCountElement.textContent = comments.length.toString();
+	countElement.textContent = comments.length.toString();
 
 	const fragment = document.createDocumentFragment();
 	comments.forEach((comment) => {
-		const commentElement = commentTemplate.cloneNode(true) as HTMLLIElement;
+		const commentElement = template.cloneNode(true) as HTMLLIElement;
 		const commentAvatar = commentElement.querySelector<HTMLImageElement>('.social__picture');
 		commentAvatar!.src = comment.avatar;
 		commentAvatar!.alt = comment.name;
@@ -26,11 +27,11 @@ const renderComments = (comments: PhotoComment[]) => {
 		fragment.append(commentElement);
 	});
 
-	commentsWrapper.append(fragment);
+	list.append(fragment);
 };
 
 const clearComments = () => {
-	commentsWrapper.innerHTML = '';
+	list.innerHTML = '';
 };
 
 export { renderComments, clearComments };

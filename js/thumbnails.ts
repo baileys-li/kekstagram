@@ -1,12 +1,13 @@
 import { openPhoto } from './full-photo';
 import { photos } from './mock/mock';
 import type { Photo } from './types';
+import { findTemplate } from './utils/utils';
 
-const template = document.querySelector<HTMLTemplateElement>('#picture')?.content.querySelector<HTMLAnchorElement>('.picture');
+const template = findTemplate<HTMLAnchorElement>('#picture');
 const picturesWrapper = document.querySelector('.pictures');
 
-if (!template || !picturesWrapper) {
-	throw new Error('Template or pictures wrapper not found');
+if (!picturesWrapper) {
+	throw new Error('Pictures wrapper not found');
 }
 
 const fragment = document.createDocumentFragment();
