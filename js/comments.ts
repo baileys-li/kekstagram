@@ -2,7 +2,7 @@ import { PhotoComment } from './types';
 import { findBEMElement, findTemplate, renderPack } from './utils';
 
 const countElement = document.querySelector<HTMLSpanElement>('.comments-count');
-const template = findTemplate<HTMLLIElement>('#comment');
+const template = findTemplate<HTMLLIElement>('comment');
 const list = document.querySelector<HTMLUListElement>('.social__comments');
 const status = document.querySelector<HTMLDivElement>('.social__comment-count');
 const loader = document.querySelector<HTMLButtonElement>('.comments-loader');

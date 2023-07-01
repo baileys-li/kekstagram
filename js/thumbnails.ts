@@ -3,7 +3,7 @@ import { photos } from './mock/mock';
 import type { Photo } from './types';
 import { findBEMElement, findTemplate, renderPack } from './utils';
 
-const template = findTemplate<HTMLAnchorElement>('#picture');
+const template = findTemplate<HTMLAnchorElement>('picture');
 const picturesWrapper = document.querySelector('.pictures');
 
 if (!picturesWrapper) {
