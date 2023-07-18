@@ -9,28 +9,30 @@ const enum Default {
 const decreaseButton = form!.querySelector<HTMLButtonElement>('.scale__control--smaller');
 const increaseButton = form!.querySelector<HTMLButtonElement>('.scale__control--bigger');
 
+const getScale = () => parseInt(form!.scale.value, 10);
+const setScale = (value: number) => {
+	image!.style.transform = `scale(${value / 100})`;
+	form!.scale.value = `${value}%`;
+};
+
 decreaseButton?.addEventListener('click', () => {
-	const currentScale = parseInt(form!.scale.value, 10);
+	const currentScale = getScale();
 
 	if (currentScale <= Default.MIN) {
 		return;
 	}
 
-	const newScale = currentScale - Default.STEP;
-	image!.style.transform = `scale(${newScale / 100})`;
-	form!.scale.value = `${newScale}%`;
+	setScale(currentScale - Default.STEP);
 });
 
 increaseButton?.addEventListener('click', () => {
-	const currentScale = parseInt(form!.scale.value, 10);
+	const currentScale = getScale();
 
 	if (currentScale >= Default.MAX) {
 		return;
 	}
 
-	const newScale = currentScale + Default.STEP;
-	image!.style.transform = `scale(${newScale / 100})`;
-	form!.scale.value = `${newScale}%`;
+	setScale(currentScale + Default.STEP);
 });
 
 export const resetScale = () => image!.style.removeProperty('transform');
