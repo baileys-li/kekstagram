@@ -1,5 +1,6 @@
 import { isEscapeKey, toggleModalClasses } from '../utils';
 import { form, wrapper } from './elements';
+import './validation';
 
 const closeForm = () => form!.reset();
 
