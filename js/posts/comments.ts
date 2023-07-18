@@ -1,5 +1,5 @@
-import { PhotoComment } from './types';
-import { findBEMElement, findTemplate, renderPack } from './utils';
+import { PhotoComment } from '../types';
+import { findBEMElement, findTemplate, renderPack } from '../utils';
 
 const enum Default {
 	PACK_COUNT = 5,

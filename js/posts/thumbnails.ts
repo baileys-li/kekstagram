@@ -1,7 +1,7 @@
-import { findPhotoByID, photos } from './data';
+import { findPhotoByID, photos } from '../data';
 import { openPhoto } from './full-photo';
-import type { Photo } from './types';
-import { findBEMElement, findTemplate, renderPack } from './utils';
+import type { Photo } from '../types';
+import { findBEMElement, findTemplate, renderPack } from '../utils';
 
 const template = findTemplate<HTMLAnchorElement>('picture');
 const picturesWrapper = document.querySelector('.pictures');

@@ -1,6 +1,6 @@
 import { clearComments, renderComments } from './comments';
-import { Photo } from './types';
-import { isEscapeKey } from './utils';
+import { Photo } from '../types';
+import { isEscapeKey } from '../utils';
 
 const wrapper = document.querySelector<HTMLDivElement>('.big-picture');
 const imageElement = wrapper?.querySelector<HTMLImageElement>('.big-picture__img img');
