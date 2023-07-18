@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  pristinejs:
+    specifier: ^1.1.0
+    version: 1.1.0
+
 devDependencies:
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.60.1
@@ -1970,6 +1975,10 @@ packages:
       ansi-styles: 5.2.0
       react-is: 17.0.2
     dev: true
+
+  /pristinejs@1.1.0:
+    resolution: {integrity: sha512-ardy/YEaZr5E1l0YM2eOkeQx0KoenQjBa7HkfX4Dt0PmqKhZUfyAIT9Qk23vGv4vvvWy/zb/eBe6sSsKUtahrg==}
+    dev: false
 
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
