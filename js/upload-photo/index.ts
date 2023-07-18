@@ -3,6 +3,7 @@ import { form, wrapper } from './elements';
 import { resetScale } from './scale';
 import './validation';
 import { resetValidation, validate } from './validation';
+import './effect';
 
 const closeForm = () => form!.reset();
 

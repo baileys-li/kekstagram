@@ -37,6 +37,7 @@
 		"node": "18.16.1"
 	},
 	"dependencies": {
+		"nouislider": "^15.7.1",
 		"pristinejs": "^1.1.0"
 	}
 }
