@@ -1,6 +1,6 @@
 import { clearComments, renderComments } from './comments';
-import { Photo } from './types';
-import { isEscapeKey } from './utils';
+import { Photo } from '../types';
+import { isEscapeKey, toggleModalClasses } from '../utils';
 
 const wrapper = document.querySelector<HTMLDivElement>('.big-picture');
 const imageElement = wrapper?.querySelector<HTMLImageElement>('.big-picture__img img');
@@ -12,13 +12,8 @@ if (!wrapper || !imageElement || !descriptionElement || !likesElement || !closeB
 	throw new Error('Critical elements for Full Photo were not found');
 }
 
-const toggleModalClasses = (willBeOpened = true) => {
-	wrapper.classList.toggle('hidden', !willBeOpened);
-	document.body.classList.toggle('modal-open', willBeOpened);
-};
-
 const closeModal = () => {
-	toggleModalClasses(false);
+	toggleModalClasses(wrapper, false);
 	document.removeEventListener('keydown', onDocumentEscape);
 	clearComments();
 };
@@ -41,7 +36,7 @@ const renderPhoto = ({ url, description, likes, comments }: Photo) => {
 };
 
 const openPhoto = (photo: Photo) => {
-	toggleModalClasses(true);
+	toggleModalClasses(wrapper);
 	renderPhoto(photo);
 	document.addEventListener('keydown', onDocumentEscape);
 };

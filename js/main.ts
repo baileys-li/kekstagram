@@ -1,1 +1,2 @@
-import './thumbnails';
+import './posts/thumbnails';
+import './upload-photo';

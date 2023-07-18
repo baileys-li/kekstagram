@@ -37,5 +37,9 @@ const renderPack = <El>(items: El[], container: Element, render: (item: El) => H
 	container.append(fragment);
 };
 
+const toggleModalClasses = (wrapper: HTMLElement, willBeOpened = true) => {
+	wrapper.classList.toggle('hidden', !willBeOpened);
+	document.body.classList.toggle('modal-open', willBeOpened);
+};
 
-export { isUniqueArray, isEscapeKey, findTemplate, findBEMElement, renderPack };
+export { isUniqueArray, isEscapeKey, findTemplate, findBEMElement, renderPack, toggleModalClasses };
