@@ -1,24 +1,21 @@
-import { isEscapeKey } from '../utils';
+import { isEscapeKey, toggleModalClasses } from '../utils';
 import { form, wrapper } from './elements';
 
-const toggleModalClasses = (willBeOpened = true) => {
-	wrapper!.classList.toggle('hidden', !willBeOpened);
-	document.body.classList.toggle('modal-open', willBeOpened);
-};
+const closeForm = () => form!.reset();
 
 const onDocumentEscape = (evt: KeyboardEvent) => {
 	if (isEscapeKey(evt)) {
-		form!.reset();
+		closeForm();
 	}
 };
 
 form!.filename.addEventListener('change', () => {
-	toggleModalClasses();
+	toggleModalClasses(wrapper!);
 	document.addEventListener('keydown', onDocumentEscape);
 });
 
 form!.addEventListener('reset', () => {
-	toggleModalClasses(false);
+	toggleModalClasses(wrapper!, false);
 	document.removeEventListener('keydown', onDocumentEscape);
 });
 
