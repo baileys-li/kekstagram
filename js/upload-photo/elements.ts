@@ -1,10 +1,16 @@
+import type { Effect } from './effect-map';
+
+type EffectRadioNodeList = Omit<RadioNodeList, 'value'> & {
+	value: Effect;
+}
+
 type UploadForm = HTMLFormElement & {
 	filename: HTMLInputElement;
 	scale: HTMLInputElement;
 	'effect-level': HTMLInputElement;
-	effect: RadioNodeList;
+	effect: EffectRadioNodeList;
 	hashtags: HTMLInputElement;
-	description: HTMLTextAreaElement	;
+	description: HTMLTextAreaElement;
 };
 
 const form = document.querySelector<UploadForm>('.img-upload__form');

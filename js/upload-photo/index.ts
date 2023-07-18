@@ -4,6 +4,7 @@ import { resetScale } from './scale';
 import './validation';
 import { resetValidation, validate } from './validation';
 import './effect';
+import { resetEffect } from './effect';
 
 const closeForm = () => form!.reset();
 
@@ -23,6 +24,7 @@ form!.addEventListener('reset', () => {
 	toggleModalClasses(wrapper!, false);
 	resetValidation();
 	resetScale();
+	resetEffect();
 	document.removeEventListener('keydown', onDocumentEscape);
 });
 
