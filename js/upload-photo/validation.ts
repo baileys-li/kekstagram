@@ -3,13 +3,13 @@ import { form } from './elements';
 import { isUniqueArray } from '../utils';
 
 const enum Hashtags {
-	MaxCount = 5,
-	MaxCountError = 'Нельзя указать больше пяти хэш-тегов',
-	UniqueError = 'Один и тот же хэш-тег не может быть использован дважды',
-	HashStartError = 'Хэштег должен начинаться с #',
-	LengthError = 'Максимальная длина одного хэш-тега 20 символов, включая решётку',
-	CharactersError = 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы спецсимволы и т п символы пунктуации тире дефис запятая и т п эмодзи и т д',
-	OnlyHashError = 'Хеш-тег не может состоять только из одной решётки',
+	MAX_COUNT = 5,
+	MAX_COUNT_ERROR = 'Нельзя указать больше пяти хэш-тегов',
+	UNIQUE_ERROR = 'Один и тот же хэш-тег не может быть использован дважды',
+	HASH_START_ERROR = 'Хэштег должен начинаться с #',
+	LENGTH_ERROR = 'Максимальная длина одного хэш-тега 20 символов, включая решётку',
+	CHARACTERS_ERROR = 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы спецсимволы и т п символы пунктуации тире дефис запятая и т п эмодзи и т д',
+	ONLY_HASH_ERROR = 'Хеш-тег не может состоять только из одной решётки',
 }
 
 const HASHTAG_REG_EXP = /^#[a-zа-яё0-9]{1,19}$/;
@@ -29,34 +29,34 @@ const validateHashtags = (value: string) => {
 
 	const tags = value.trim().toLocaleLowerCase().split(' ');
 
-	if (tags.length > Hashtags.MaxCount) {
-		hashtagsError = Hashtags.MaxCountError;
+	if (tags.length > Hashtags.MAX_COUNT) {
+		hashtagsError = Hashtags.MAX_COUNT_ERROR;
 		return false;
 	}
 
 	if (!isUniqueArray(tags)) {
-		hashtagsError = Hashtags.UniqueError;
+		hashtagsError = Hashtags.UNIQUE_ERROR;
 		return false;
 	}
 
 	return tags.every((tag) => {
 		if (tag[0] !== '#') {
-			hashtagsError = Hashtags.HashStartError;
+			hashtagsError = Hashtags.HASH_START_ERROR;
 			return false;
 		}
 
 		if (tag.length > 20) {
-			hashtagsError = Hashtags.LengthError;
+			hashtagsError = Hashtags.LENGTH_ERROR;
 			return false;
 		}
 
 		if (tag === '#') {
-			hashtagsError = Hashtags.OnlyHashError;
+			hashtagsError = Hashtags.ONLY_HASH_ERROR;
 			return false;
 		}
 
 		if (!HASHTAG_REG_EXP.test(tag)) {
-			hashtagsError = Hashtags.CharactersError;
+			hashtagsError = Hashtags.CHARACTERS_ERROR;
 			return false;
 		}
 
