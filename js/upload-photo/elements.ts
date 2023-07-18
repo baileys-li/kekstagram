@@ -8,9 +8,10 @@ type UploadForm = HTMLFormElement & {
 };
 
 const form = document.querySelector<UploadForm>('.img-upload__form');
+const wrapper = form?.querySelector<HTMLDivElement>('.img-upload__overlay');
 
-if (!form) {
+if (!form || !wrapper) {
 	throw new Error('Form or her critical element was not found');
 }
 
-export { form };
+export { form, wrapper };
