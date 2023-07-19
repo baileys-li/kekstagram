@@ -6,7 +6,7 @@ import { resetValidation, validate } from './validation';
 import './effect';
 import { resetEffect } from './effect';
 import { api } from '../api';
-import { addErrorModal, addSuccessModal } from '../status-modals';
+import { errorModal, successModal } from '../status-modals';
 
 const closeForm = () => form!.reset();
 
@@ -46,9 +46,9 @@ form!.addEventListener('submit', async (evt) => {
 			await api.sendPhoto(new FormData(form!));
 
 			closeForm();
-			addSuccessModal();
+			successModal.open();
 		} catch (error) {
-			addErrorModal();
+			errorModal.open();
 		}
 
 		submitButton!.disabled = false;

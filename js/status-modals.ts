@@ -3,75 +3,56 @@ import { findBEMElement, findTemplate, isEscapeKey } from './utils';
 const successTemplate = findTemplate<HTMLDivElement>('success');
 const errorTemplate = findTemplate<HTMLDivElement>('error');
 
-export const addSuccessModal = () => {
-	const wrapper = successTemplate.cloneNode(true) as typeof errorTemplate;
-	document.body.appendChild(wrapper);
-	const isAnotherModalOpen = document.body.classList.contains('modal-open');
-	const cta = findBEMElement<HTMLButtonElement>(wrapper, 'button');
+class Modal<T extends Element = Element> {
+	#template: T;
+	#isAnotherModalOpen = false;
+	#wrapper: T | null = null;
+	#button: HTMLButtonElement | null = null;
 
-	if (!isAnotherModalOpen) {
-		document.body.classList.add('modal-open');
+	constructor(template: T) {
+		this.#template = template;
 	}
 
-	const close = () => {
-		wrapper.remove();
+	open() {
+		this.#wrapper = this.#template.cloneNode(true) as T;
+		document.body.appendChild(this.#wrapper);
+		this.#isAnotherModalOpen = document.body.classList.contains('modal-open');
+		this.#button = findBEMElement<HTMLButtonElement>(this.#wrapper, 'button');
 
-		if (!isAnotherModalOpen) {
-			document.body.classList.remove('modal-open');
+		this.#toggleBodyClass(true);
+
+		this.#wrapper.addEventListener('click', this.#handleClick);
+		document.addEventListener('keydown', this.#onDocumentEscape, true);
+	}
+
+	close() {
+		this.#toggleBodyClass(false);
+		this.#wrapper!.remove();
+		document.removeEventListener('keydown', this.#onDocumentEscape, true);
+	}
+
+	#toggleBodyClass(willBeAdded = false) {
+		if (this.#isAnotherModalOpen) {
+			return;
 		}
-		document.removeEventListener('keydown', onDocumentEscape, true);
-	};
 
-	document.addEventListener('keydown', onDocumentEscape, true);
+		document.body.classList.toggle('modal-open', willBeAdded);
+	}
 
-	function onDocumentEscape(evt: KeyboardEvent) {
+	#onDocumentEscape = (evt: KeyboardEvent) => {
 		if (isEscapeKey(evt)) {
 			evt.preventDefault();
 			evt.stopPropagation();
-			close();
+			this.close();
 		}
-	}
-
-	document.addEventListener('click', (evt) => {
-		if (evt.target === wrapper || evt.target === cta) {
-			close();
-		}
-	});
-};
-
-
-export const addErrorModal = () => {
-	const errorElement = errorTemplate.cloneNode(true) as typeof errorTemplate;
-	document.body.appendChild(errorElement);
-	const isAnotherModalOpen = document.body.classList.contains('modal-open');
-	const cta = findBEMElement<HTMLButtonElement>(errorElement, 'button');
-
-	if (!isAnotherModalOpen) {
-		document.body.classList.add('modal-open');
-	}
-
-	const close = () => {
-		errorElement.remove();
-
-		if (!isAnotherModalOpen) {
-			document.body.classList.remove('modal-open');
-		}
-		document.removeEventListener('keydown', onDocumentEscape, true);
 	};
 
-	document.addEventListener('keydown', onDocumentEscape, true);
-
-	function onDocumentEscape(evt: KeyboardEvent) {
-		if (isEscapeKey(evt)) {
-			evt.preventDefault();
-			evt.stopPropagation();
-			close();
+	#handleClick = (evt: Event) => {
+		if (evt.target === this.#wrapper || evt.target === this.#button) {
+			this.close();
 		}
-	}
+	};
+}
 
-	document.addEventListener('click', (evt) => {
-		if (evt.target === errorElement || evt.target === cta) {
-			close();
-		}
-	});
-};
+export const successModal = new Modal(successTemplate);
+export const errorModal = new Modal(errorTemplate);
