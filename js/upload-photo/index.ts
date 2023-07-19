@@ -1,12 +1,19 @@
 import { isEscapeKey, toggleModalClasses } from '../utils';
-import { form, wrapper } from './elements';
+import { form, submitButton, wrapper } from './elements';
 import { resetScale } from './scale';
 import './validation';
 import { resetValidation, validate } from './validation';
 import './effect';
 import { resetEffect } from './effect';
+import { api } from '../api';
+import { addErrorModal } from '../status-modals';
 
 const closeForm = () => form!.reset();
+
+const PublishButtonText = {
+	IDLE: 'Опубликовать',
+	SENDING: 'Публикую...'
+};
 
 const onDocumentEscape = (evt: KeyboardEvent) => {
 	const isFocusOnText = document.activeElement === form!.hashtags || document.activeElement === form!.description;
@@ -28,10 +35,20 @@ form!.addEventListener('reset', () => {
 	document.removeEventListener('keydown', onDocumentEscape);
 });
 
-form!.addEventListener('submit', (evt) => {
+form!.addEventListener('submit', async (evt) => {
 	evt.preventDefault();
 
 	if (validate()) {
-		closeForm();
+		submitButton!.disabled = true;
+		submitButton!.textContent = PublishButtonText.SENDING;
+
+		try {
+			await api.sendPhoto(new FormData(form!));
+		} catch (error) {
+			addErrorModal();
+		}
+
+		submitButton!.disabled = false;
+		submitButton!.textContent = PublishButtonText.IDLE;
 	}
 });
