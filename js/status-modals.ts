@@ -3,25 +3,48 @@ import { findBEMElement, findTemplate, isEscapeKey } from './utils';
 const successTemplate = findTemplate<HTMLDivElement>('success');
 const errorTemplate = findTemplate<HTMLDivElement>('error');
 
+interface OpenOptions {
+	title?: string
+	onClick?: () => void
+}
 class Modal<T extends Element = Element> {
 	#template: T;
 	#isAnotherModalOpen = false;
 	#wrapper: T | null = null;
 	#button: HTMLButtonElement | null = null;
+	#title: HTMLHeadingElement | null = null;
 
 	constructor(template: T) {
 		this.#template = template;
 	}
 
-	open() {
+	open(options?: OpenOptions) {
 		this.#wrapper = this.#template.cloneNode(true) as T;
 		document.body.appendChild(this.#wrapper);
 		this.#isAnotherModalOpen = document.body.classList.contains('modal-open');
 		this.#button = findBEMElement<HTMLButtonElement>(this.#wrapper, 'button');
+		this.#title = findBEMElement<HTMLHeadingElement>(this.#wrapper, 'title');
 
 		this.#toggleBodyClass(true);
+		this.#addListeners();
 
-		this.#wrapper.addEventListener('click', this.#handleClick);
+		if (options) {
+			this.#processOptions(options);
+		}
+	}
+
+	#processOptions({title, onClick}: OpenOptions) {
+		if (title) {
+			this.#title!.textContent = title;
+		}
+
+		if (onClick) {
+			this.#button!.addEventListener('click', onClick);
+		}
+	}
+
+	#addListeners() {
+		this.#wrapper!.addEventListener('click', this.#handleClick);
 		document.addEventListener('keydown', this.#onDocumentEscape, true);
 	}
 
