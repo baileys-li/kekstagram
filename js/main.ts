@@ -1,5 +1,6 @@
+import './polyfills'
 import { api } from './api';
-import {renderThumbnails} from './posts/thumbnails';
+import {renderThumbnails} from './gallery/thumbnails';
 import { errorModal } from './status-modals';
 import './upload-photo';
 
