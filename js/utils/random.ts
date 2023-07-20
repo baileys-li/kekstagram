@@ -17,29 +17,10 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomElement = <Element>(array: Element[]) => array[getRandomInteger(0, array.length - 1)];
-const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
+/**
+ * Use for random sorting
+ */
+const randomSort = () => getRandomInteger(-1, 1) as -1 | 0 | 1;
 
 
-const createRandomIdGenerator = (min: number = Default.MIN_ID, max: number = Default.MAX_ID) => {
-	const previousIds: number[] = [];
-
-	return () => {
-		if (previousIds.length === max - min + 1) {
-			throw new Error('Нет свободных id');
-		}
-
-		let currentId = getRandomInteger(min, max);
-
-		while (previousIds.includes(currentId)) {
-			currentId = getRandomInteger(min, max);
-		}
-
-		previousIds.push(currentId);
-
-		return currentId;
-	};
-};
-
-
-export { getRandomInteger, getRandomElement, getRandomBoolean, createRandomIdGenerator };
+export { getRandomInteger };
