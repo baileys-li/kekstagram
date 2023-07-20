@@ -1,4 +1,4 @@
-import { findPhotoByID, photos } from '../data';
+
 import { openPhoto } from './full-photo';
 import type { Photo } from '../types';
 import { findBEMElement, findTemplate, renderPack } from '../utils';
@@ -10,16 +10,6 @@ if (!picturesWrapper) {
 	throw new Error('Pictures wrapper not found');
 }
 
-const onThumbnailClick = (evt: Event) => {
-	evt.preventDefault();
-	const link = evt.currentTarget as typeof template;
-	const id = Number(link.dataset.id);
-	const foundPhoto = findPhotoByID(id);
-
-	if (foundPhoto) {
-		return openPhoto(foundPhoto);
-	}
-};
 
 const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 	const thumbnail = template.cloneNode(true) as typeof template;
@@ -34,9 +24,12 @@ const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 	return thumbnail;
 };
 
-renderPack(photos, picturesWrapper, (photo) => {
+export const renderThumbnails = (photos: Photo[]) => renderPack(photos, picturesWrapper, (photo) => {
 	const thumbnail = createThumbnail(photo);
-	thumbnail.addEventListener('click', onThumbnailClick);
+	thumbnail.addEventListener('click', (evt) => {
+		evt.preventDefault();
+		openPhoto(photo);
+	});
 
 	return thumbnail;
 });

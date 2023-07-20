@@ -5,6 +5,9 @@ import './validation';
 import { resetValidation, validate } from './validation';
 import './effect';
 import { resetEffect } from './effect';
+import { api } from '../api';
+import { errorModal, successModal } from '../status-modals';
+import { changeSubmitButtonState } from './button';
 
 const closeForm = () => form!.reset();
 
@@ -28,10 +31,20 @@ form!.addEventListener('reset', () => {
 	document.removeEventListener('keydown', onDocumentEscape);
 });
 
-form!.addEventListener('submit', (evt) => {
+form!.addEventListener('submit', async (evt) => {
 	evt.preventDefault();
 
 	if (validate()) {
-		closeForm();
+		changeSubmitButtonState('SENDING');
+
+		try {
+			await api.sendPhoto(new FormData(form!));
+			closeForm();
+			successModal.open();
+		} catch (error) {
+			errorModal.open();
+		}
+
+		changeSubmitButtonState('IDLE');
 	}
 });
