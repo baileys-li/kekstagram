@@ -19,18 +19,21 @@ class Modal<T extends Element = Element> {
 	}
 
 	open(options?: OpenOptions) {
-		this.#wrapper = this.#template.cloneNode(true) as T;
-		document.body.appendChild(this.#wrapper);
-		this.#isAnotherModalOpen = document.body.classList.contains('modal-open');
-		this.#button = findBEMElement<HTMLButtonElement>(this.#wrapper, 'button');
-		this.#title = findBEMElement<HTMLHeadingElement>(this.#wrapper, 'title');
-
+		this.#updateState();
+		document.body.appendChild(this.#wrapper!);
 		this.#toggleBodyClass(true);
 		this.#addListeners();
 
 		if (options) {
 			this.#processOptions(options);
 		}
+	}
+
+	#updateState() {
+		this.#wrapper = this.#template.cloneNode(true) as T;
+		this.#isAnotherModalOpen = document.body.classList.contains('modal-open');
+		this.#button = findBEMElement<HTMLButtonElement>(this.#wrapper, 'button');
+		this.#title = findBEMElement<HTMLHeadingElement>(this.#wrapper, 'title');
 	}
 
 	#processOptions({title, onClick}: OpenOptions) {
