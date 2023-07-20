@@ -23,4 +23,4 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 const randomSort = () => getRandomInteger(-1, 1) as -1 | 0 | 1;
 
 
-export { getRandomInteger };
+export { getRandomInteger, randomSort };

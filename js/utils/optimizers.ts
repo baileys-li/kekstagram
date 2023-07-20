@@ -1,4 +1,9 @@
-const debounce = <A = unknown, R = void>(callback: (...args: A[]) => R, delay = 500) => {
+
+const enum Default {
+	DELAY = 500,
+}
+
+const debounce = <A = unknown, R = void>(callback: (...args: A[]) => R, delay: number = Default.DELAY) => {
 	let timer: ReturnType<typeof setTimeout>;
 	return (...args: A[]) => {
 		clearTimeout(timer);
@@ -6,7 +11,7 @@ const debounce = <A = unknown, R = void>(callback: (...args: A[]) => R, delay = 
 	};
 };
 
-const throttle = <A = unknown, R = void>(callback: (...args: A[]) => R, delay = 500) => {
+const throttle = <A = unknown, R = void>(callback: (...args: A[]) => R, delay: number = Default.DELAY) => {
 	let shouldWait = false;
 	let waitedArgs: A[] | null = null;
 

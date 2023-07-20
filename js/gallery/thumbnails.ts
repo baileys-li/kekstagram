@@ -10,7 +10,6 @@ if (!picturesWrapper) {
 	throw new Error('Pictures wrapper not found');
 }
 
-
 const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 	const thumbnail = template.cloneNode(true) as typeof template;
 	const pictureElement = findBEMElement<HTMLImageElement>(thumbnail, 'img');
@@ -24,7 +23,7 @@ const createThumbnail = ({ id, url, description, likes, comments }: Photo) => {
 	return thumbnail;
 };
 
-export const renderThumbnails = (photos: Photo[]) => renderPack(photos, picturesWrapper, (photo) => {
+const renderThumbnails = (photos: Photo[]) => renderPack(photos, picturesWrapper, (photo) => {
 	const thumbnail = createThumbnail(photo);
 	thumbnail.addEventListener('click', (evt) => {
 		evt.preventDefault();
@@ -33,3 +32,7 @@ export const renderThumbnails = (photos: Photo[]) => renderPack(photos, pictures
 
 	return thumbnail;
 });
+
+const clearThumbnails = () => picturesWrapper.querySelectorAll('.picture').forEach((picture) => picture.remove());
+
+export { renderThumbnails, clearThumbnails };
