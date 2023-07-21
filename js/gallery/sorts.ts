@@ -15,7 +15,6 @@ if (!wrapper || !sortButtons || sortButtons.length < 3) {
 const [defaultButton, randomButton, discussedButton] = sortButtons;
 let activeButton = defaultButton;
 
-wrapper.classList.remove('img-filters--inactive');
 const isButton = (target: HTMLElement): target is HTMLButtonElement => target.classList.contains('img-filters__button');
 
 const sortPhotos = () => {
@@ -51,6 +50,7 @@ wrapper.addEventListener('click', (evt) => {
 
 export const initThumbnailSorting = (receivedPhotos: Photo[]) => {
 	photos = receivedPhotos;
+	wrapper.classList.remove('img-filters--inactive');
 	renderThumbnails(receivedPhotos);
 };
 

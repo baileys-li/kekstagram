@@ -27,7 +27,7 @@ const validateHashtags = (value: string) => {
 		return true;
 	}
 
-	const tags = value.trim().toLocaleLowerCase().split(' ');
+	const tags = value.trim().toLocaleLowerCase().split(' ').filter(Boolean);
 
 	if (tags.length > Hashtags.MAX_COUNT) {
 		hashtagsError = Hashtags.MAX_COUNT_ERROR;
@@ -66,6 +66,7 @@ const validateHashtags = (value: string) => {
 };
 
 pristine.addValidator(form!.hashtags, validateHashtags, () => hashtagsError);
+pristine.addValidator(form!.description, (value: string) => value.length <= 140, 'Максимальная длина комментария 140 символов');
 
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
