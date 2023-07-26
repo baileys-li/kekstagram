@@ -27,7 +27,7 @@ const validateHashtags = (value: string) => {
 		return true;
 	}
 
-	const tags = value.trim().toLocaleLowerCase().split(' ').filter(Boolean);
+	const tags = value.trim().toLocaleLowerCase().split(/\s*(?=#)/);
 
 	if (tags.length > Hashtags.MAX_COUNT) {
 		hashtagsError = Hashtags.MAX_COUNT_ERROR;
