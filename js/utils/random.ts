@@ -3,6 +3,13 @@ const enum Default {
 	MAX_ID = 1_000_000,
 	MIN_NUMBER = 1,
 	MAX_NUMBER = 100,
+	COMPENSATION = 1,
+}
+
+const enum RandomResult {
+	LESS = -1,
+	EQUAL = 0,
+	MORE = 1,
 }
 
 /**
@@ -14,13 +21,14 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 	min = Math.ceil(min);
 	max = Math.floor(max);
 
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+	return Math.floor(Math.random() * (max - min + Default.COMPENSATION)) + min;
 };
+
 
 /**
  * Use for random sorting
  */
-const randomSort = () => getRandomInteger(-1, 1) as -1 | 0 | 1;
+const randomSort = () => getRandomInteger(RandomResult.LESS, RandomResult.MORE) as RandomResult;
 
 
 export { getRandomInteger, randomSort };
