@@ -1,6 +1,6 @@
 import { Photo } from '../types';
 import { debounce } from '../utils/optimizers';
-import { randomSort } from '../utils/random';
+import { getRandomSlice } from '../utils/random-slice';
 import { clearThumbnails, renderThumbnails } from './thumbnails';
 
 const enum Default {
@@ -28,7 +28,7 @@ const isButton = (target: HTMLElement): target is HTMLButtonElement => target.cl
 
 const sortPhotos = () => {
 	if (activeButton === randomButton) {
-		return photos.toSorted(randomSort).slice(0, Default.MAX_SORTED_PHOTOS);
+		return getRandomSlice(photos, Default.MAX_SORTED_PHOTOS);
 	}
 
 	if (activeButton === discussedButton) {
