@@ -10,19 +10,19 @@ type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 class KekstagramAPI {
 	#baseUrl = 'https://22.javascript.pages.academy/kekstagram';
 
-	async fetch(route: string, method: Method = 'GET', body?: BodyInit) {
+	async fetch<T>(route: string, method: Method = 'GET', body?: BodyInit) {
 		const response = await fetch(`${this.#baseUrl}${route}`, { method, body });
 
 		if (!response.ok) {
 			throw new Error();
 		}
 
-		return response.json();
+		return response.json() as Promise<T>;
 	}
 
 	async getPhotos() {
 		try {
-			return await this.fetch('/data') as Photo[];
+			return await this.fetch<Photo[]>('/data');
 		} catch (error) {
 			throw new Error('Не удалось загрузить данные. Попробуйте обновить страницу');
 		}
@@ -38,3 +38,4 @@ class KekstagramAPI {
 }
 
 export const api = new KekstagramAPI();
+
