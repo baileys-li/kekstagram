@@ -1,0 +1,33 @@
+name: Publish site
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+
+      - name: Install dependencies  📦
+        run: pnpm i --ignore-scripts
+      - name: Build 🏗️
+        run: pnpm build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: ./build
+          branch: gh-pages
