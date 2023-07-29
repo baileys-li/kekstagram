@@ -24,7 +24,6 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 	return Math.floor(Math.random() * (max - min + Default.COMPENSATION)) + min;
 };
 
-
 /**
  * Use for random sorting
  */

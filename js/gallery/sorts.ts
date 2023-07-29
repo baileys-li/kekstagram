@@ -5,7 +5,7 @@ import { clearThumbnails, renderThumbnails } from './thumbnails';
 
 const enum Default {
 	MAX_SORTED_PHOTOS = 10,
-	AMOUNT_BUTTONS
+	AMOUNT_BUTTONS = 3
 }
 
 const WRAPPER_CLASS = 'img-filters';
@@ -14,7 +14,6 @@ const ACTIVE_BUTTON_CLASS = `${BUTTON_CLASS}--active`;
 
 const wrapper = document.querySelector<HTMLDivElement>(`.${WRAPPER_CLASS}`);
 const sortButtons = wrapper?.querySelectorAll<HTMLButtonElement>(`.${BUTTON_CLASS}`);
-
 
 let photos: Photo[] = [];
 
