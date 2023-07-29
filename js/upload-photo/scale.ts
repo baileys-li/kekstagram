@@ -4,6 +4,7 @@ const enum Default {
 	STEP = 25,
 	MIN = 25,
 	MAX = 100,
+	PERCENT_COEFFICIENT = 100,
 }
 
 const decreaseButton = form!.querySelector<HTMLButtonElement>('.scale__control--smaller');
@@ -11,7 +12,7 @@ const increaseButton = form!.querySelector<HTMLButtonElement>('.scale__control--
 
 const getScale = () => parseInt(form!.scale.value, 10);
 const setScale = (value: number) => {
-	image!.style.transform = `scale(${value / 100})`;
+	image!.style.transform = `scale(${value / Default.PERCENT_COEFFICIENT})`;
 	form!.scale.value = `${value}%`;
 };
 

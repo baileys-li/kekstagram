@@ -1,6 +1,6 @@
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.min.css';
-import { customSliderWrapper, effectsWrapper, form, image } from './elements';
+import { customSliderWrapper, effectsWrapper, form, image, sliderFieldset } from './elements';
 import { EFFECT_OPTION_MAP } from './effect-map';
 
 const CHANGE_EVENT = new Event('change');
@@ -10,12 +10,12 @@ const slider = noUiSlider.create(customSliderWrapper!, {
 	connect: 'lower',
 });
 
-customSliderWrapper!.hidden = true;
+sliderFieldset!.hidden = true;
 
 effectsWrapper?.addEventListener('change', () => {
 	const effect = form!.effect.value;
 
-	customSliderWrapper!.hidden = effect === 'none';
+	sliderFieldset!.hidden = effect === 'none';
 	slider.updateOptions(EFFECT_OPTION_MAP[effect].slider, false);
 });
 

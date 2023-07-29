@@ -8,6 +8,7 @@ import { resetEffect } from './effect';
 import { api } from '../api';
 import { errorModal, successModal } from '../status-modals';
 import { changeSubmitButtonState } from './button';
+import { processFile } from './preview';
 
 const closeForm = () => form!.reset();
 
@@ -19,6 +20,12 @@ const onDocumentEscape = (evt: KeyboardEvent) => {
 };
 
 form!.filename.addEventListener('change', () => {
+	if (!processFile()) {
+		return errorModal.open({
+			title: 'Ошибка загрузки',
+		});
+	}
+
 	toggleModalClasses(wrapper!);
 	document.addEventListener('keydown', onDocumentEscape);
 });

@@ -9,10 +9,13 @@ const template = findTemplate<HTMLLIElement>('comment');
 const list = document.querySelector<HTMLUListElement>('.social__comments');
 const status = document.querySelector<HTMLDivElement>('.social__comment-count');
 const loader = document.querySelector<HTMLButtonElement>('.comments-loader');
+const allCount = status?.querySelector<HTMLSpanElement>('.comments-count');
+const renderedCount = status?.querySelector<HTMLSpanElement>('.comments-rendered');
+
 
 let currentComments: PhotoComment[] = [];
 
-if (!list || !status || !loader) {
+if (!list || !status || !loader || !allCount || !renderedCount) {
 	throw new Error('Critical elements for Comments were not found');
 }
 
@@ -36,13 +39,14 @@ loader.addEventListener('click', () => {
 	const nextPackComments = currentComments.slice(currentCount, endOfSlice);
 	renderPack(nextPackComments, list, createComment);
 
-	status.textContent = `${endOfSlice} из ${currentComments.length} комментариев`;
+	renderedCount.textContent = endOfSlice.toString();
 
 	loader.hidden = isAllWillBeShown;
 });
 
 const renderComments = (comments: PhotoComment[]) => {
 	currentComments = comments;
+	allCount.textContent = comments.length.toString();
 	loader.click();
 };
 

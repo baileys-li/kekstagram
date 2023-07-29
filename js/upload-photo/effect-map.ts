@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { Options } from 'nouislider';
 
 const FROM_ZERO_TO_ONE = createSliderData(0, 1, 0.1);

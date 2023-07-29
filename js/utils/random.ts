@@ -3,6 +3,18 @@ const enum Default {
 	MAX_ID = 1_000_000,
 	MIN_NUMBER = 1,
 	MAX_NUMBER = 100,
+	COMPENSATION = 1,
+}
+
+const enum RandomResult {
+	LESS = -1,
+	EQUAL,
+	MORE,
+}
+
+const enum RandomBoolean {
+	FALSE,
+	TRUE,
 }
 
 /**
@@ -14,13 +26,17 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 	min = Math.ceil(min);
 	max = Math.floor(max);
 
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+	return Math.floor(Math.random() * (max - min + Default.COMPENSATION)) + min;
 };
 
 /**
  * Use for random sorting
  */
-const randomSort = () => getRandomInteger(-1, 1) as -1 | 0 | 1;
+const randomSort = () => getRandomInteger(RandomResult.LESS, RandomResult.MORE) as RandomResult;
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const getRandomElement = <Element>(array: Element[] | readonly Element[]) => array[getRandomInteger(0, array.length - 1)];
 
-export { getRandomInteger };
+const getRandomBoolean = () => Boolean(getRandomInteger(RandomBoolean.FALSE, RandomBoolean.TRUE));
+
+export { getRandomInteger, randomSort, getRandomElement, getRandomBoolean };
