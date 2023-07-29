@@ -12,6 +12,11 @@ const enum RandomResult {
 	MORE = 1,
 }
 
+const enum RandomBoolean {
+	FALSE,
+	TRUE
+}
+
 /**
  *
  * @param min min < max
@@ -30,4 +35,11 @@ const getRandomInteger = (min: number = Default.MIN_NUMBER, max: number = Defaul
 const randomSort = () => getRandomInteger(RandomResult.LESS, RandomResult.MORE) as RandomResult;
 
 
-export { getRandomInteger, randomSort };
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const getRandomElement = <Element>(array: Element[]) => array[getRandomInteger(0, array.length - 1)];
+
+
+const getRandomBoolean = () => Boolean(getRandomInteger(RandomBoolean.FALSE, RandomBoolean.TRUE));
+
+
+export { getRandomInteger, randomSort, getRandomElement, getRandomBoolean };
